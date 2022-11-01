@@ -11,6 +11,7 @@
   {{ 'component-rating.css' | asset_url | stylesheet_tag }}
   {{ 'component-loading-overlay.css' | asset_url | stylesheet_tag }}
   {{ 'component-deferred-media.css' | asset_url | stylesheet_tag }}
+  <script src="{{ 'modal-custom.js' | asset_url }}" defer></script>
 
   {%- style -%}
     .section-{{ section.id }}-padding {
@@ -310,6 +311,7 @@
         id="ProductInfo-{{ section.id }}"
         class="product__info-container{% if section.settings.enable_sticky_info %} product__info-container--sticky{% endif %}"
       >
+
         {%- assign product_form_id = 'product-form-' | append: section.id -%}
 
         {%- for block in section.blocks -%}
@@ -637,6 +639,31 @@
                       {%- if block.settings.show_dynamic_checkout -%}
                         {{ form | payment_button }}
                       {%- endif -%}
+                    </div>
+                    <div class="recognize-shipping-rate">
+                      <div class="recognize-shipping-rate__button">
+                        <p>Recognize shipping rate</p>
+                      </div>
+                      <div class="recognize-shipping-rate__modal">
+                        <div class="recognize-shipping-rate__modal__content">
+                          <span class="close">&times;</span>
+                          <form>
+                            <p>
+                              <label for="country">Country:</label>
+                              <input type="text" name="country" id="country">
+                            </p>
+                            <p>
+                              <label for="province">Province:</label>
+                              <input type="text" name="province" id="province">
+                            </p>
+                            <div class="submit-button">Recognize</div>
+                            </form>
+                            <div class="display-rate">
+                              <p class="display-rate__result">Enter your shipping adress in order to know rate &#8593; </p>
+                              <h3>Rate:</h3>
+                            </div>
+                        </div>
+                      </div>
                     </div>
                   {%- endform -%}
                 </product-form>
