@@ -1,0 +1,12 @@
+# Store configuration:
+# - Down theme
+# - 2 random products with images/prices but without product variants
+
+# Shipping setting:
+# - Shipping to Ukraine - x (UAH)
+# - Rest world - y (UAH)
+
+# Describtion:
+# There are each of products page have additional button - 'Recognize shipping rate'
+# In modal you will be able to see 3 inputs nesseccary for getting info related with your shipping price
+# If data will be correct you will see price value, otherwise input will became red color

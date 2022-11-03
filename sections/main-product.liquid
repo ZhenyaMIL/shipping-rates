@@ -642,7 +642,9 @@
                     </div>
                     <div class="recognize-shipping-rate">
                       <div class="recognize-shipping-rate__button">
-                        <p>Recognize shipping rate</p>
+                        <div>
+                          <p>Recognize shipping rate</p>
+                        </div>
                       </div>
                       <div class="recognize-shipping-rate__modal">
                         <div class="recognize-shipping-rate__modal__content">
@@ -650,17 +652,26 @@
                           <form>
                             <p>
                               <label for="country">Country:</label>
-                              <input type="text" name="country" id="country">
+                              <input type="text" name="country" id="country" value="Ukraine">
                             </p>
                             <p>
                               <label for="province">Province:</label>
-                              <input type="text" name="province" id="province">
+                              <input type="text" name="province" id="province" value="Zhytomir">
                             </p>
-                            <div class="submit-button">Recognize</div>
+                            <p>
+                              <label for="post_code">Postal Code:</label>
+                              <input type="text" name="post_code" id="post_code" value="10001">
+                            </p>
+                            <div {% for variant in product.variants %}data-id="{{ variant.id }}"{% endfor %} class="submit-button">
+                              <p class="active">Recognize</p>
+                              <img class='preloader' src="{{ "preloader.gif" | asset_url }}" alt="Preloader">
+                            </div>
+                            <div>
+                            </div>
                             </form>
                             <div class="display-rate">
                               <p class="display-rate__result">Enter your shipping adress in order to know rate &#8593; </p>
-                              <h3>Rate:</h3>
+                              <h3>Rate: <span class="display-rate__result__value"></span></h3>
                             </div>
                         </div>
                       </div>

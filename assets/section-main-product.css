@@ -1255,6 +1255,7 @@ a.product__text {
   height: 46px;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
+  justify-content: center;
 }
 
 .recognize-shipping-rate__button:hover{
@@ -1351,11 +1352,16 @@ a.product__text {
   flex-direction: column;
   background-color: black;
   padding: 20px;
+  transition: all 0.3s ease-in-out;
+}
+
+.display-rate.active {
+  background-color: #0a504c;
 }
 
 .display-rate__result {
   color: white;
-  transition: all 0.3s ease-in-out;
+  transition: all 0.6s ease-in-out;
   margin: 0;
   margin-bottom: 10px;
 }
@@ -1365,4 +1371,45 @@ a.product__text {
   color: black;
   padding: 5px;
   margin: 0;
+}
+
+.recognize-shipping-rate__modal__content .preloader.active,
+.recognize-shipping-rate__modal__content .submit-button p.active {
+  display: block;
+}
+
+.recognize-shipping-rate__modal__content .preloader,
+.recognize-shipping-rate__modal__content .submit-button p {
+  display: none;
+}
+
+.recognize-shipping-rate__modal__content .submit-button p {
+  margin: 0;
+}
+
+.recognize-shipping-rate__modal__content .preloader {
+  margin: 0 auto;
+  height: 27px;
+}
+
+.recognize-shipping-rate__modal__content p input {
+  padding: 5px;
+}
+
+.recognize-shipping-rate__modal__content p input.no-valid {
+  border: 1px solid red;
+}
+
+.recognize-shipping-rate__modal__content p input {
+  transition: all 0.3s ease-in-out;
+}
+
+@media only screen and (max-width: 750px) {
+  .recognize-shipping-rate__button {
+    max-width: 438px;
+  }
+
+  .recognize-shipping-rate__modal__content {
+    width: 80%;
+  }
 }
