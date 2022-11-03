@@ -643,7 +643,7 @@
                     <div class="recognize-shipping-rate">
                       <div class="recognize-shipping-rate__button">
                         <div>
-                          <p>Recognize shipping rate</p>
+                          <p>Calculate shipping rate</p>
                         </div>
                       </div>
                       <div class="recognize-shipping-rate__modal">
@@ -662,8 +662,9 @@
                               <label for="post_code">Postal Code:</label>
                               <input type="text" name="post_code" id="post_code" value="10001">
                             </p>
+                            <img class='shipping-icon' src="{{ "shipping.png" | asset_url }}" alt="Shipping">
                             <div {% for variant in product.variants %}data-id="{{ variant.id }}"{% endfor %} class="submit-button">
-                              <p class="active">Recognize</p>
+                              <p class="active">Calculate</p>
                               <img class='preloader' src="{{ "preloader.gif" | asset_url }}" alt="Preloader">
                             </div>
                             <div>

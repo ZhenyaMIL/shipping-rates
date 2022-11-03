@@ -1338,6 +1338,7 @@ a.product__text {
 }
 .recognize-shipping-rate__modal__content {
   background: #e5e4e4;
+  position: relative;
 }
 
 .recognize-shipping-rate__modal__content > p {
@@ -1387,6 +1388,13 @@ a.product__text {
   display: block;
 }
 
+.shipping-icon {
+  width: 60px;
+  position: absolute;
+  bottom: 108px;
+  right: 30px;
+}
+
 .recognize-shipping-rate__modal__content .preloader,
 .recognize-shipping-rate__modal__content .submit-button p {
   display: none;
@@ -1405,6 +1413,10 @@ a.product__text {
   padding: 5px;
 }
 
+.recognize-shipping-rate__modal__content p input:focus {
+  outline: 0;
+}
+
 .recognize-shipping-rate__modal__content p input.no-valid {
   border: 1px solid red;
 }
@@ -1413,6 +1425,14 @@ a.product__text {
   transition: all 0.3s ease-in-out;
   border: none;
   box-shadow: rgb(60 64 67 / 30%) 0px 1px 2px 0px, rgb(60 64 67 / 15%) 0px 1px 3px 1px;
+}
+
+@media only screen and (max-width: 1000px) {
+  .shipping-icon {
+    position: relative;
+    bottom: auto;
+    right: auto;
+  }
 }
 
 @media only screen and (max-width: 750px) {
