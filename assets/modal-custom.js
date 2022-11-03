@@ -1,19 +1,19 @@
 document.addEventListener('DOMContentLoaded', function () {
 
   let modal = document.querySelector(".recognize-shipping-rate__modal");
-  let btn = document.querySelector(".recognize-shipping-rate__button");
-  let closeButton = document.getElementsByClassName("close")[0];
+  let closeModal = document.getElementsByClassName("close")[0];
+  let openModalButton = document.querySelector(".recognize-shipping-rate__button");
   let recognizeButton = document.querySelector('.submit-button');
   let country, province, post_code;
   let preloader = document.querySelector('.recognize-shipping-rate__modal__content .preloader');
   let buttonTitle = document.querySelector('.recognize-shipping-rate__modal__content .submit-button p');
   let inputs = document.querySelectorAll('.recognize-shipping-rate__modal__content p input');
 
-  btn.onclick = function () {
+  openModalButton.onclick = function () {
     modal.style.display = "block";
   }
 
-  closeButton.onclick = function () {
+  closeModal.onclick = function () {
     modal.style.display = "none";
   }
 
@@ -25,6 +25,8 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   recognizeButton.addEventListener('click', () => {
+    recognizeButton.classList.add('active');
+
     country = document.querySelector('.recognize-shipping-rate__modal__content input[name="country"]').value.trim();
     province = document.querySelector('.recognize-shipping-rate__modal__content input[name="province"]').value.trim();
     post_code = document.querySelector('.recognize-shipping-rate__modal__content input[name="post_code"]').value.trim();
@@ -122,7 +124,6 @@ document.addEventListener('DOMContentLoaded', function () {
       .then(response => response.json())
       .then((response) => {
         if (response) {
-          console.log(response)
           let price = response.shipping_rates[0].price;
           let currency = response.shipping_rates[0].currency;
 
@@ -138,7 +139,6 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   function returnCartState() {
-    console.log(5)
     let productsData = [];
 
     for (let i = 0; i < sessionStorage.length; i++) {
@@ -167,6 +167,7 @@ document.addEventListener('DOMContentLoaded', function () {
       .then(response => {
         preloader.classList.remove('active');
         buttonTitle.classList.add('active');
+        recognizeButton.classList.remove('active');
 
         inputs.forEach(input => {
           input.classList.remove('no-valid');

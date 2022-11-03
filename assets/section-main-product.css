@@ -1299,19 +1299,25 @@ a.product__text {
 
 .recognize-shipping-rate__modal div.submit-button {
   width: 50%;
-  background: transparent;
+  background: white;
   padding: 5px;
-  outline: 1px solid black;
   margin-bottom: 20px;
   margin-top: 20px;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
   border: none;
   text-align: center;
+  border-radius: 0;
+  box-shadow: #3c40434d 0 1px 2px, #3c404326 0 1px 3px 1px;
+}
+
+.recognize-shipping-rate__modal div.submit-button.active {
+  border-radius: 20px;
+  width: 40px;
 }
 
 .recognize-shipping-rate__modal div.submit-button:hover {
-  outline: 2px solid black;
+  color: black;
 }
 
 /* The Close Button */
@@ -1329,6 +1335,9 @@ a.product__text {
   color: black;
   text-decoration: none;
   cursor: pointer;
+}
+.recognize-shipping-rate__modal__content {
+  background: #e5e4e4;
 }
 
 .recognize-shipping-rate__modal__content > p {
@@ -1350,13 +1359,13 @@ a.product__text {
   width: calc( 100% + 40px);
   display: flex;
   flex-direction: column;
-  background-color: black;
+  background-color: #000000cc;
   padding: 20px;
   transition: all 0.3s ease-in-out;
 }
 
 .display-rate.active {
-  background-color: #0a504c;
+  background-color: #2e8b57;
 }
 
 .display-rate__result {
@@ -1402,6 +1411,8 @@ a.product__text {
 
 .recognize-shipping-rate__modal__content p input {
   transition: all 0.3s ease-in-out;
+  border: none;
+  box-shadow: rgb(60 64 67 / 30%) 0px 1px 2px 0px, rgb(60 64 67 / 15%) 0px 1px 3px 1px;
 }
 
 @media only screen and (max-width: 750px) {
