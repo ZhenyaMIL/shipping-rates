@@ -640,14 +640,14 @@
                         {{ form | payment_button }}
                       {%- endif -%}
                     </div>
-                    <div class="recognize-shipping-rate">
-                      <div class="recognize-shipping-rate__button">
+                    <div class="calculate-shipping-rate">
+                      <div class="calculate-shipping-rate__open-modal">
                         <div>
                           <p>Calculate shipping rate</p>
                         </div>
                       </div>
-                      <div class="recognize-shipping-rate__modal">
-                        <div class="recognize-shipping-rate__modal__content">
+                      <div class="calculate-shipping-rate__modal">
+                        <div class="calculate-shipping-rate__modal__content">
                           <span class="close">&times;</span>
                           <form>
                             <p>
@@ -663,8 +663,8 @@
                               <input type="text" name="post_code" id="post_code" value="10001">
                             </p>
                             <img class='shipping-icon' src="{{ "shipping.png" | asset_url }}" alt="Shipping">
-                            <div {% for variant in product.variants %}data-id="{{ variant.id }}"{% endfor %} class="submit-button">
-                              <p class="active">Calculate</p>
+                            <div {% for variant in product.variants %}data-id="{{ variant.id }}"{% endfor %} class="calculate-button enable">
+                              <p>Calculate</p>
                               <img class='preloader' src="{{ "preloader.gif" | asset_url }}" alt="Preloader">
                             </div>
                             <div>

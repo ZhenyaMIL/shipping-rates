@@ -1,40 +1,57 @@
 document.addEventListener('DOMContentLoaded', function () {
 
-  let modal = document.querySelector(".recognize-shipping-rate__modal");
+  let modal = document.querySelector(".calculate-shipping-rate__modal");
   let closeModal = document.getElementsByClassName("close")[0];
-  let openModalButton = document.querySelector(".recognize-shipping-rate__button");
-  let recognizeButton = document.querySelector('.submit-button');
+  let openModalButton = document.querySelector(".calculate-shipping-rate__open-modal");
+  let calculateButton = document.querySelector('.calculate-button');
   let country, province, post_code;
-  let preloader = document.querySelector('.recognize-shipping-rate__modal__content .preloader');
-  let buttonTitle = document.querySelector('.recognize-shipping-rate__modal__content .submit-button p');
-  let inputs = document.querySelectorAll('.recognize-shipping-rate__modal__content p input');
+  let inputs = document.querySelectorAll('.calculate-shipping-rate__modal__content p input');
+  let resultValue = document.querySelector('span.display-rate__result__value');
+  let wrapperBlock = document.querySelector('.display-rate');
 
   openModalButton.onclick = function () {
-    modal.style.display = "block";
+    modal.classList.add('active');
   }
 
+  inputs.forEach(input => {
+    input.oninput = function() {
+      let counter = 0;
+
+      inputs.forEach(input => {
+          if(input.value) {
+            counter++;
+          }
+      })
+
+      if(counter === inputs.length){
+        calculateButton.classList.add('enable');
+      } else {
+        calculateButton.classList.remove('enable');
+      }
+    }
+  })
+
   closeModal.onclick = function () {
-    modal.style.display = "none";
+    modal.classList.remove('active');
   }
 
   // When the user clicks anywhere outside of the modal, close it
   window.onclick = function (event) {
     if (event.target == modal) {
-      modal.style.display = "none";
+      modal.classList.remove('active');
     }
   }
 
-  recognizeButton.addEventListener('click', () => {
-    recognizeButton.classList.add('active');
+  calculateButton.addEventListener('click', () => {
+    if(calculateButton.classList.contains("enable")){
+      calculateButton.classList.add('active');
 
-    country = document.querySelector('.recognize-shipping-rate__modal__content input[name="country"]').value.trim();
-    province = document.querySelector('.recognize-shipping-rate__modal__content input[name="province"]').value.trim();
-    post_code = document.querySelector('.recognize-shipping-rate__modal__content input[name="post_code"]').value.trim();
+      country = document.querySelector('.calculate-shipping-rate__modal__content input[name="country"]').value.trim();
+      province = document.querySelector('.calculate-shipping-rate__modal__content input[name="province"]').value.trim();
+      post_code = document.querySelector('.calculate-shipping-rate__modal__content input[name="post_code"]').value.trim();
 
-    preloader.classList.add('active');
-    buttonTitle.classList.remove('active');
-
-    saveCartItems();
+      saveCartItems();
+    }
   });
 
   function saveCartItems() {
@@ -84,7 +101,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   function addCurrentProduct() {
-    let idValue = document.querySelector('.recognize-shipping-rate__modal__content .submit-button').getAttribute('data-id');
+    let idValue = document.querySelector('.calculate-shipping-rate__modal__content .calculate-button').getAttribute('data-id');
 
     let formData = {
       'items': [{
@@ -101,7 +118,7 @@ document.addEventListener('DOMContentLoaded', function () {
         body: JSON.stringify(formData)
       })
       .then(response => {
-        recognizeRate(country, province, post_code);
+        calculateRate(country, province, post_code);
         return response.json();
       })
       .catch((error) => {
@@ -109,9 +126,7 @@ document.addEventListener('DOMContentLoaded', function () {
       });
   }
 
-  function recognizeRate(country, province, post_code) {
-    let resultValue = document.querySelector('span.display-rate__result__value');
-    let wrapperBlock = document.querySelector('.display-rate');
+  function calculateRate(country, province, post_code) {
 
     fetch(`https://ttttssedfwsdef.myshopify.com/cart/shipping_rates.json?shipping_address%5Bzip%5D=${post_code}&shipping_address%5Bcountry%5D=${country}&shipping_address%5Bprovince%5D=${province}`, {
         method: 'GET',
@@ -165,9 +180,7 @@ document.addEventListener('DOMContentLoaded', function () {
         body: JSON.stringify(formData)
       })
       .then(response => {
-        preloader.classList.remove('active');
-        buttonTitle.classList.add('active');
-        recognizeButton.classList.remove('active');
+        calculateButton.classList.remove('active');
 
         inputs.forEach(input => {
           input.classList.remove('no-valid');
@@ -181,8 +194,9 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   function notCorrectData() {
-    preloader.classList.remove('active');
-    buttonTitle.classList.add('active');
+    calculateButton.classList.remove('active');
+    wrapperBlock.classList.remove('active');
+    resultValue.innerHTML = '';
 
     inputs.forEach(input => {
       input.classList.add('no-valid');

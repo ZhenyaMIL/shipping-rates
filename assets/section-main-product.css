@@ -1245,8 +1245,8 @@ a.product__text {
   flex-shrink: 0;
 }
 
-/* Recognize shipping rate */
-.recognize-shipping-rate__button {
+/* calculate shipping rate */
+.calculate-shipping-rate__open-modal {
   display: flex;
   text-align: center;
   align-items: center;
@@ -1258,38 +1258,39 @@ a.product__text {
   justify-content: center;
 }
 
-.recognize-shipping-rate__button:hover{
+.calculate-shipping-rate__open-modal:hover{
   border: 2px solid black;
 }
 
-.recognize-shipping-rate__button p {
+.calculate-shipping-rate__open-modal p {
   width: 100%;
   margin: 0;
 }
 
 /* modal */
-
-/* The Modal (background) */
-.recognize-shipping-rate__modal {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
+.calculate-shipping-rate__modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
   left: 0;
   top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.4);
 }
 
-/* Modal Content/Box */
-.recognize-shipping-rate__modal__content {
+.calculate-shipping-rate__modal.active {
+  display: block;
+}
+
+/* Modal Content Box */
+.calculate-shipping-rate__modal__content {
   background-color: #fefefe;
-  margin: 15% auto; /* 15% from the top and centered */
+  margin: 15% auto;
   padding: 20px 20px 0;
   border: 1px solid #888;
-  width: 50%; /* Could be more or less, depending on screen size */
+  width: 50%;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -1297,7 +1298,7 @@ a.product__text {
   align-items: center;
 }
 
-.recognize-shipping-rate__modal div.submit-button {
+.calculate-shipping-rate__modal div.calculate-button {
   width: 50%;
   background: white;
   padding: 5px;
@@ -1309,14 +1310,31 @@ a.product__text {
   text-align: center;
   border-radius: 0;
   box-shadow: #3c40434d 0 1px 2px, #3c404326 0 1px 3px 1px;
+  opacity: .4;
+  cursor: not-allowed;
 }
 
-.recognize-shipping-rate__modal div.submit-button.active {
+.calculate-shipping-rate__modal div.calculate-button.enable {
+  opacity: 1;
+  cursor: pointer;
+}
+
+.calculate-shipping-rate__modal div.calculate-button p,
+.calculate-shipping-rate__modal div.calculate-button.active .preloader {
+  display: block;
+}
+
+.calculate-shipping-rate__modal div.calculate-button.active p,
+.calculate-shipping-rate__modal div.calculate-button .preloader {
+  display: none;
+}
+
+.calculate-shipping-rate__modal div.calculate-button.active {
   border-radius: 20px;
   width: 40px;
 }
 
-.recognize-shipping-rate__modal div.submit-button:hover {
+.calculate-shipping-rate__modal div.calculate-button:hover {
   color: black;
 }
 
@@ -1336,12 +1354,12 @@ a.product__text {
   text-decoration: none;
   cursor: pointer;
 }
-.recognize-shipping-rate__modal__content {
+.calculate-shipping-rate__modal__content {
   background: #e5e4e4;
   position: relative;
 }
 
-.recognize-shipping-rate__modal__content > p {
+.calculate-shipping-rate__modal__content > p {
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -1383,11 +1401,6 @@ a.product__text {
   margin: 0;
 }
 
-.recognize-shipping-rate__modal__content .preloader.active,
-.recognize-shipping-rate__modal__content .submit-button p.active {
-  display: block;
-}
-
 .shipping-icon {
   width: 60px;
   position: absolute;
@@ -1395,33 +1408,28 @@ a.product__text {
   right: 30px;
 }
 
-.recognize-shipping-rate__modal__content .preloader,
-.recognize-shipping-rate__modal__content .submit-button p {
-  display: none;
-}
-
-.recognize-shipping-rate__modal__content .submit-button p {
+.calculate-shipping-rate__modal__content .calculate-button p {
   margin: 0;
 }
 
-.recognize-shipping-rate__modal__content .preloader {
+.calculate-shipping-rate__modal__content .preloader {
   margin: 0 auto;
   height: 27px;
 }
 
-.recognize-shipping-rate__modal__content p input {
+.calculate-shipping-rate__modal__content p input {
   padding: 5px;
 }
 
-.recognize-shipping-rate__modal__content p input:focus {
+.calculate-shipping-rate__modal__content p input:focus {
   outline: 0;
 }
 
-.recognize-shipping-rate__modal__content p input.no-valid {
+.calculate-shipping-rate__modal__content p input.no-valid {
   border: 1px solid red;
 }
 
-.recognize-shipping-rate__modal__content p input {
+.calculate-shipping-rate__modal__content p input {
   transition: all 0.3s ease-in-out;
   border: none;
   box-shadow: rgb(60 64 67 / 30%) 0px 1px 2px 0px, rgb(60 64 67 / 15%) 0px 1px 3px 1px;
@@ -1436,11 +1444,11 @@ a.product__text {
 }
 
 @media only screen and (max-width: 750px) {
-  .recognize-shipping-rate__button {
+  .calculate-shipping-rate__open-modal {
     max-width: 438px;
   }
 
-  .recognize-shipping-rate__modal__content {
+  .calculate-shipping-rate__modal__content {
     width: 80%;
   }
 }
