@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', function () {
   let inputs = document.querySelectorAll('.calculate-shipping-rate__modal__content p input');
   let resultValue = document.querySelector('span.display-rate__result__value');
   let wrapperBlock = document.querySelector('.display-rate');
+  let domenName = window.location.protocol + "//" + window.location.host;
 
   openModalButton.onclick = function () {
     modal.classList.add('active');
@@ -55,7 +56,7 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   function saveCartItems() {
-    fetch(`https://ttttssedfwsdef.myshopify.com/cart.js`, {
+    fetch(`${domenName}/cart.js`, {
         method: 'GET',
         headers: {
           'Accept': 'application/json',
@@ -78,10 +79,13 @@ document.addEventListener('DOMContentLoaded', function () {
           clearCart(nextStep = "addCurrentProduct");
         }
       })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
   }
 
   function clearCart(nextStep) {
-    fetch(`https://ttttssedfwsdef.myshopify.com/cart/clear.js`, {
+    fetch(`${domenName}/cart/cleard.js`, {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
@@ -98,6 +102,9 @@ document.addEventListener('DOMContentLoaded', function () {
           returnCartState();
         }
       })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
   }
 
   function addCurrentProduct() {
@@ -128,7 +135,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function calculateRate(country, province, post_code) {
 
-    fetch(`https://ttttssedfwsdef.myshopify.com/cart/shipping_rates.json?shipping_address%5Bzip%5D=${post_code}&shipping_address%5Bcountry%5D=${country}&shipping_address%5Bprovince%5D=${province}`, {
+    fetch(`${domenName}/cart/shipping_rates.json?shipping_address%5Bzip%5D=${post_code}&shipping_address%5Bcountry%5D=${country}&shipping_address%5Bprovince%5D=${province}`, {
         method: 'GET',
         headers: {
           'Accept': 'application/json',
