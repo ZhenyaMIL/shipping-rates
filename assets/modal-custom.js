@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', function () {
   let wrapperBlock = document.querySelector('.display-rate');
   let domenName = window.location.protocol + "//" + window.location.host;
 
+
   openModalButton.onclick = function () {
     modal.classList.add('active');
   }
@@ -73,7 +74,7 @@ document.addEventListener('DOMContentLoaded', function () {
             let variantId = product.variant_id;
             let quantity = product.quantity;
 
-            sessionStorage.setItem(`${variantId}`, `${quantity}`);
+            sessionStorage.setItem(`variant-id-${variantId}`, `${quantity}`);
           });
 
           clearCart(nextStep = "addCurrentProduct");
@@ -85,7 +86,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   function clearCart(nextStep) {
-    fetch(`${domenName}/cart/cleard.js`, {
+    fetch(`${domenName}/cart/clear.js`, {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
@@ -100,6 +101,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
         if (nextStep === "returnCartState") {
           returnCartState();
+        }
+
+        if (nextStep === "clearAndShowValidation") {
+          notCorrectData();
         }
       })
       .catch((error) => {
@@ -134,7 +139,6 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   function calculateRate(country, province, post_code) {
-
     fetch(`${domenName}/cart/shipping_rates.json?shipping_address%5Bzip%5D=${post_code}&shipping_address%5Bcountry%5D=${country}&shipping_address%5Bprovince%5D=${province}`, {
         method: 'GET',
         headers: {
@@ -156,7 +160,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
       })
       .catch(() => {
-        notCorrectData();
+        clearCart("clearAndShowValidation")
       });
   }
 
@@ -166,20 +170,28 @@ document.addEventListener('DOMContentLoaded', function () {
     for (let i = 0; i < sessionStorage.length; i++) {
       let productData;
       let key = sessionStorage.key(i);
+      let productKey = key.includes('variant-id-');
 
-      productData = {
-        'id': key,
-        'quantity': sessionStorage.getItem(key)
-      };
+      if(productKey) {
+        let transformKey = key.split('variant-id-')[1];
 
-      productsData.push(productData);
+        productData = {
+          'id': transformKey,
+          'quantity': sessionStorage.getItem(key)
+        };
+
+        productsData.push(productData);
+      }
     }
 
     let formData = {
       'items': productsData
     };
 
-    fetch(window.Shopify.routes.root + 'cart/add.js', {
+    let itemsExist = formData.items.length ? true : false;
+
+    if(itemsExist) {
+      fetch(window.Shopify.routes.root + 'cart/add.js', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -189,15 +201,19 @@ document.addEventListener('DOMContentLoaded', function () {
       .then(response => {
         calculateButton.classList.remove('active');
 
-        inputs.forEach(input => {
-          input.classList.remove('no-valid');
-        })
+        validate(true);
 
+        sessionStorage.clear();
         return response.json();
       })
       .catch((error) => {
         console.error('Error:', error);
       });
+    } else {
+      calculateButton.classList.remove('active');
+
+      validate(true);
+    }
   }
 
   function notCorrectData() {
@@ -205,8 +221,18 @@ document.addEventListener('DOMContentLoaded', function () {
     wrapperBlock.classList.remove('active');
     resultValue.innerHTML = '';
 
-    inputs.forEach(input => {
-      input.classList.add('no-valid');
-    })
+    validate(false);
+  }
+
+  function validate(value) {
+    if(value === true) {
+      inputs.forEach(input => {
+        input.classList.remove('no-valid');
+      })
+    } else {
+      inputs.forEach(input => {
+        input.classList.add('no-valid');
+      })
+    }
   }
 });
